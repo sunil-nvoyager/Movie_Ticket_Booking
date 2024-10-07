@@ -1,0 +1,25 @@
+{
+    "api_docs": {
+        "open_api_file": "openapi.json",
+        "commit_output": {
+            "should_commit_to_repo": true,
+            "branch": "master",
+            "location": "."
+        },
+        "generate_example": true,
+        "host_documentation": true
+    },
+    "arch_docs": {
+        "commit_output": {
+            "should_commit_to_repo": true,
+            "branch": "master",
+            "location": "."
+        },
+        "generate_example": true,
+        "host_documentation": true
+    },
+    "ignore":[
+        "node_modules",
+        "public"
+    ]
+}
