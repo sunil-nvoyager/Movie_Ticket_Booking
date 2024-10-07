@@ -1,0 +1,534 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ticketly",
+    "description": "A Movie Theatre Ticket booking System  ",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/bookTicket": {
+      "post": {
+        "tags": [
+          "TicketBooking"
+        ],
+        "summary": "Book Tickets",
+        "description": "This endpoint allows users to book tickets for a movie by providing their name, phone number, movie name, start time, and the number of tickets. A successful booking will return a 200 response, while validation errors will return a 422 response detailing the issues.",
+        "operationId": "bookTicket_bookTicket_post",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Username"
+            }
+          },
+          {
+            "name": "userPhoneNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Userphonenumber"
+            }
+          },
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          },
+          {
+            "name": "numTickets",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Numtickets"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/updateMovieSlotForTicket": {
+      "post": {
+        "tags": [
+          "Update Ticket Timing"
+        ],
+        "summary": "Update a Ticket Time",
+        "description": "This endpoint allows users to update the timing of a movie ticket by providing the ticket ID, the new movie title, and the new start time. It requires three query parameters: 'ticketId', 'newMovie', and 'newStartTime'. A successful response returns a 200 status code, while a 422 status code indicates a validation error. For more details on validation errors, refer to the HTTPValidationError schema.",
+        "operationId": "updateMovieSlotForTicket_updateMovieSlotForTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          },
+          {
+            "name": "newMovie",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Newmovie"
+            }
+          },
+          {
+            "name": "newStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Newstarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllTicketsForMovieSlot": {
+      "post": {
+        "tags": [
+          "Ticket Details"
+        ],
+        "summary": "Get all Booked Tickets for a Movie Slot",
+        "description": "This endpoint retrieves all booked tickets for a specified movie slot. It requires the movie name and the start time of the movie as query parameters. A successful response returns ticket details in JSON format, while validation errors are handled with appropriate error messages.",
+        "operationId": "getAllTicketsForMovieSlot_getAllTicketsForMovieSlot_post",
+        "parameters": [
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getUserDetailsByTicketId": {
+      "post": {
+        "tags": [
+          "User Details"
+        ],
+        "summary": "User Details",
+        "description": "This endpoint retrieves user details based on the provided ticket ID. It requires a valid ticket ID as a query parameter. A successful response returns user details, while a validation error indicates issues with the provided input.",
+        "operationId": "getUserDetailsByTicketId_getUserDetailsByTicketId_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cancelTicket": {
+      "post": {
+        "tags": [
+          " Cancel Tickets"
+        ],
+        "summary": "Cancel Tickets",
+        "description": "This endpoint allows users to cancel a ticket using its unique ticketId. A successful cancellation will return a 200 response, while validation errors will result in a 422 response.",
+        "operationId": "cancelTicket_cancelTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/expireTickets": {
+      "post": {
+        "tags": [
+          "Automated Ticket Expiry"
+        ],
+        "summary": "Make Tickets Expire",
+        "description": "This endpoint allows users to mark a ticket as expired if the time difference between the ticket's timestamp and the current time exceeds 8 hours.",
+        "operationId": "expiretickets_expireTickets_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scheduleMovie": {
+      "post": {
+        "tags": [
+          "Movie Scheduler"
+        ],
+        "summary": "Movie Scheduler",
+        "description": "This endpoint allows users to add a movie to the schedule by providing necessary details such as slot name, description, start time, end time, slot type, and genre. All parameters are required and must be provided in the query. Successful requests will return a 200 response, while validation errors will return a 422 response with details.",
+        "operationId": "scheduleMovie_scheduleMovie_post",
+        "parameters": [
+          {
+            "name": "slotName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotname"
+            }
+          },
+          {
+            "name": "slotDescription",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotdescription"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Starttime"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Endtime"
+            }
+          },
+          {
+            "name": "slotType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SlotType"
+            }
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlots": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots",
+        "description": "This endpoint retrieves details of all available movie slots, allowing users to view scheduling options based on genre.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlots_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlotsByGenre": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots Genre",
+        "description": "This endpoint retrieves details of all movie slots filtered by genre. It requires a query parameter 'genre' to specify the desired genre. A successful response returns a list of movie slots, while a validation error indicates issues with the provided parameters.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlotsByGenre_post",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Crime",
+          "Drama",
+          "Fantasy",
+          "Historical",
+          "Historical Fiction",
+          "Horror",
+          "Magical Realism",
+          "Mystery",
+          "Philosophical",
+          "Political",
+          "Romance",
+          "Saga",
+          "Satire",
+          "Scifi",
+          "Social",
+          "Speculative",
+          "Thriller",
+          "Urban",
+          "Animation"
+        ],
+        "title": "Genre"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "SlotType": {
+        "type": "string",
+        "enum": [
+          "Movie",
+          "Documentary",
+          "Concert"
+        ],
+        "title": "SlotType"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
