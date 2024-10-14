@@ -67,9 +67,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -129,9 +127,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -182,9 +178,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -225,9 +219,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -268,9 +260,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -300,9 +290,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           }
@@ -378,9 +366,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           },
@@ -410,9 +396,7 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
-                "schema": {
-
-                }
+                "schema": {}
               }
             }
           }
@@ -442,8 +426,44 @@
             "description": "Successful Response",
             "content": {
               "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
                 "schema": {
-
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/process": {
+      "post": {
+        "summary": "Process Data",
+        "operationId": "process_data_process_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
                 }
               }
             }
@@ -504,6 +524,58 @@
         },
         "type": "object",
         "title": "HTTPValidationError"
+      },
+      "RequestModel": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "RequestModel"
+      },
+      "ResponseModel": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "processed_name": {
+            "type": "string",
+            "title": "Processed Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "processed_name"
+        ],
+        "title": "ResponseModel"
       },
       "SlotType": {
         "type": "string",
