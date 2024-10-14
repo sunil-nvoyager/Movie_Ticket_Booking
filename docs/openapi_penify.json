@@ -1,0 +1,878 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ticketly",
+    "description": "A Movie Theatre Ticket booking System  ",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/bookTicket": {
+      "post": {
+        "tags": [
+          "TicketBooking"
+        ],
+        "summary": "Book Tickets",
+        "description": "Book tickets for a movie by providing the user's name, phone number, movie name, start time, and number of tickets.",
+        "operationId": "bookTicket_bookTicket_post",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Username"
+            }
+          },
+          {
+            "name": "userPhoneNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Userphonenumber"
+            }
+          },
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          },
+          {
+            "name": "numTickets",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Numtickets"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "userName"
+                      ],
+                      "msg": "Field required",
+                      "type": "value_error.missing"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/updateMovieSlotForTicket": {
+      "post": {
+        "tags": [
+          "Update Ticket Timing"
+        ],
+        "summary": "Update a Ticket Time",
+        "description": "Updates the timing of a movie ticket using `ticketId`, `newMovie`, and `newStartTime`.",
+        "operationId": "updateMovieSlotForTicket_updateMovieSlotForTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          },
+          {
+            "name": "newMovie",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Newmovie"
+            }
+          },
+          {
+            "name": "newStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Newstarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "ticketId"
+                      ],
+                      "msg": "Invalid ticket ID.",
+                      "type": "validation_error"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllTicketsForMovieSlot": {
+      "post": {
+        "tags": [
+          "Ticket Details"
+        ],
+        "summary": "Get all Booked Tickets for a Movie Slot",
+        "description": "Retrieves all booked tickets for a specific movie slot based on the provided `movieName` and `movieStartTime`.",
+        "operationId": "getAllTicketsForMovieSlot_getAllTicketsForMovieSlot_post",
+        "parameters": [
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "description": "Validation Error",
+                  "content": {
+                    "application/json": {
+                      "schema": {
+                        "$ref": "#/components/schemas/HTTPValidationError"
+                      }
+                    }
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getUserDetailsByTicketId": {
+      "post": {
+        "tags": [
+          "User Details"
+        ],
+        "summary": "User Details",
+        "description": "Retrieves user details based on the provided `ticketId`. This endpoint requires a valid `ticketId` as a query parameter.",
+        "operationId": "getUserDetailsByTicketId_getUserDetailsByTicketId_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "ticketId"
+                      ],
+                      "msg": "field required",
+                      "type": "value_error.missing"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cancelTicket": {
+      "post": {
+        "tags": [
+          " Cancel Tickets"
+        ],
+        "summary": "Cancel Tickets",
+        "description": "Cancels a ticket using the provided `ticketId`. This operation requires the `ticketId` as a query parameter.",
+        "operationId": "cancelTicket_cancelTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "ticketId"
+                      ],
+                      "msg": "Invalid ticket ID.",
+                      "type": "validation_error"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/expireTickets": {
+      "post": {
+        "tags": [
+          "Automated Ticket Expiry"
+        ],
+        "summary": "Make Tickets Expire",
+        "description": "Marks a ticket as expired if the difference between the ticket timing and the current time is 8 hours.",
+        "operationId": "expiretickets_expireTickets_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scheduleMovie": {
+      "post": {
+        "tags": [
+          "Movie Scheduler"
+        ],
+        "summary": "Movie Scheduler",
+        "description": "Adds a movie to the schedule with specified details including time and type.",
+        "operationId": "scheduleMovie_scheduleMovie_post",
+        "parameters": [
+          {
+            "name": "slotName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotname"
+            }
+          },
+          {
+            "name": "slotDescription",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotdescription"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Starttime"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Endtime"
+            }
+          },
+          {
+            "name": "slotType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SlotType"
+            }
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "slotName"
+                      ],
+                      "msg": "Field required",
+                      "type": "value_error.missing"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlots": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots",
+        "description": "Retrieves details of all movie slots available.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlots_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlotsByGenre": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots Genre",
+        "description": "Retrieves details of all movie slots filtered by genre. Requires a `genre` query parameter.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlotsByGenre_post",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                },
+                "example": {
+                  "detail": [
+                    {
+                      "loc": [
+                        "query",
+                        "genre"
+                      ],
+                      "msg": "field required",
+                      "type": "value_error.missing"
+                    }
+                  ]
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/process": {
+      "post": {
+        "summary": "Process Data",
+        "operationId": "process_data_process_post",
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/RequestModel"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/ResponseModel"
+                }
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        },
+        "x-codeSamples": [
+          {
+            "lang": "csharp",
+            "source": "var client = new HttpClient();\nvar request = new HttpRequestMessage(HttpMethod.Post, \"{{baseUrl}}/process\");\nrequest.Headers.Add(\"Accept\", \"application/json\");\nvar content = new StringContent(\"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\", null, \"application/json\");\nrequest.Content = content;\nvar response = await client.SendAsync(request);\nresponse.EnsureSuccessStatusCode();\nConsole.WriteLine(await response.Content.ReadAsStringAsync());\n",
+            "label": "csharp(HttpClient)"
+          },
+          {
+            "lang": "csharp",
+            "source": "var options = new RestClientOptions(\"{{baseUrl}}/process\")\n{\n  MaxTimeout = -1,\n};\nvar client = new RestClient(options);\nvar request = new RestRequest(\"\", Method.Post);\nrequest.AddHeader(\"Content-Type\", \"application/json\");\nrequest.AddHeader(\"Accept\", \"application/json\");\nvar body = @\"{\" + \"\\n\" +\n@\"  \"\"id\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"name\"\": \"\"<string>\"\",\" + \"\\n\" +\n@\"  \"\"version\"\": \"\"<string>\"\"\" + \"\\n\" +\n@\"}\";\nrequest.AddStringBody(body, DataFormat.Json);\nRestResponse response = await client.ExecuteAsync(request);\nConsole.WriteLine(response.Content);",
+            "label": "csharp(RestSharp)"
+          },
+          {
+            "lang": "curl",
+            "source": "curl --location --globoff '{{baseUrl}}/process' \\\n--header 'Content-Type: application/json' \\\n--header 'Accept: application/json' \\\n--data '{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}'",
+            "label": "curl(cURL)"
+          },
+          {
+            "lang": "c",
+            "source": "CURL *curl;\nCURLcode res;\ncurl = curl_easy_init();\nif(curl) {\n  curl_easy_setopt(curl, CURLOPT_CUSTOMREQUEST, \"POST\");\n  curl_easy_setopt(curl, CURLOPT_URL, \"{{baseUrl}}/process\");\n  curl_easy_setopt(curl, CURLOPT_FOLLOWLOCATION, 1L);\n  curl_easy_setopt(curl, CURLOPT_DEFAULT_PROTOCOL, \"https\");\n  struct curl_slist *headers = NULL;\n  headers = curl_slist_append(headers, \"Content-Type: application/json\");\n  headers = curl_slist_append(headers, \"Accept: application/json\");\n  headers = curl_slist_append(headers, \"Content-Length: \");\n  curl_easy_setopt(curl, CURLOPT_HTTPHEADER, headers);\n  const char *data = \"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\";\n  curl_easy_setopt(curl, CURLOPT_POSTFIELDS, data);\n  res = curl_easy_perform(curl);\n  curl_slist_free_all(headers);\n}\ncurl_easy_cleanup(curl);\n",
+            "label": "c(libcurl)"
+          },
+          {
+            "lang": "dart",
+            "source": "var headers = {\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n};\nvar data = json.encode({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\nvar dio = Dio();\nvar response = await dio.request(\n  '{{baseUrl}}/process',\n  options: Options(\n    method: 'POST',\n    headers: headers,\n  ),\n  data: data,\n);\n\nif (response.statusCode == 200) {\n  print(json.encode(response.data));\n}\nelse {\n  print(response.statusMessage);\n}",
+            "label": "dart(dio)"
+          },
+          {
+            "lang": "dart",
+            "source": "var headers = {\n  'Content-Type': 'application/json',\n  'Accept': 'application/json'\n};\nvar request = http.Request('POST', Uri.parse('{{baseUrl}}/process'));\nrequest.body = json.encode({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\nrequest.headers.addAll(headers);\n\nhttp.StreamedResponse response = await request.send();\n\nif (response.statusCode == 200) {\n  print(await response.stream.bytesToString());\n}\nelse {\n  print(response.reasonPhrase);\n}\n",
+            "label": "dart(http)"
+          },
+          {
+            "lang": "go",
+            "source": "package main\n\nimport (\n  \"fmt\"\n  \"strings\"\n  \"net/http\"\n  \"io/ioutil\"\n)\n\nfunc main() {\n\n  url := \"{{baseUrl}}/process\"\n  method := \"POST\"\n\n  payload := strings.NewReader(`{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}`)\n\n  client := &http.Client {\n  }\n  req, err := http.NewRequest(method, url, payload)\n\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  req.Header.Add(\"Content-Type\", \"application/json\")\n  req.Header.Add(\"Accept\", \"application/json\")\n\n  res, err := client.Do(req)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  defer res.Body.Close()\n\n  body, err := ioutil.ReadAll(res.Body)\n  if err != nil {\n    fmt.Println(err)\n    return\n  }\n  fmt.Println(string(body))\n}",
+            "label": "go(Native)"
+          },
+          {
+            "lang": "http",
+            "source": "POST /process HTTP/1.1\nHost: {{baseUrl}}\nContent-Type: application/json\nAccept: application/json\nContent-Length: 69\n\n{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}",
+            "label": "http(HTTP)"
+          },
+          {
+            "lang": "javascript",
+            "source": "const myHeaders = new Headers();\nmyHeaders.append(\"Content-Type\", \"application/json\");\nmyHeaders.append(\"Accept\", \"application/json\");\nmyHeaders.append(\"Content-Length\", \"\");\n\nconst raw = JSON.stringify({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\n\nconst requestOptions = {\n  method: \"POST\",\n  headers: myHeaders,\n  body: raw,\n  redirect: \"follow\"\n};\n\nfetch(\"{{baseUrl}}/process\", requestOptions)\n  .then((response) => response.text())\n  .then((result) => console.log(result))\n  .catch((error) => console.error(error));",
+            "label": "javascript(Fetch)"
+          },
+          {
+            "lang": "javascript",
+            "source": "// WARNING: For POST requests, body is set to null by browsers.\nvar data = JSON.stringify({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\n\nvar xhr = new XMLHttpRequest();\nxhr.withCredentials = true;\n\nxhr.addEventListener(\"readystatechange\", function() {\n  if(this.readyState === 4) {\n    console.log(this.responseText);\n  }\n});\n\nxhr.open(\"POST\", \"{{baseUrl}}/process\");\nxhr.setRequestHeader(\"Content-Type\", \"application/json\");\nxhr.setRequestHeader(\"Accept\", \"application/json\");\nxhr.setRequestHeader(\"Content-Length\", \"\");\n\nxhr.send(data);",
+            "label": "javascript(XHR)"
+          },
+          {
+            "lang": "javascript",
+            "source": "var settings = {\n  \"url\": \"{{baseUrl}}/process\",\n  \"method\": \"POST\",\n  \"timeout\": 0,\n  \"headers\": {\n    \"Content-Type\": \"application/json\",\n    \"Accept\": \"application/json\",\n    \"Content-Length\": \"\"\n  },\n  \"data\": JSON.stringify({\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\"\n  }),\n};\n\n$.ajax(settings).done(function (response) {\n  console.log(response);\n});",
+            "label": "javascript(jQuery)"
+          },
+          {
+            "lang": "java",
+            "source": "OkHttpClient client = new OkHttpClient().newBuilder()\n  .build();\nMediaType mediaType = MediaType.parse(\"application/json\");\nRequestBody body = RequestBody.create(mediaType, \"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\");\nRequest request = new Request.Builder()\n  .url(\"{{baseUrl}}/process\")\n  .method(\"POST\", body)\n  .addHeader(\"Content-Type\", \"application/json\")\n  .addHeader(\"Accept\", \"application/json\")\n  .addHeader(\"Content-Length\", \"\")\n  .build();\nResponse response = client.newCall(request).execute();",
+            "label": "java(OkHttp)"
+          },
+          {
+            "lang": "java",
+            "source": "Unirest.setTimeouts(0, 0);\nHttpResponse<String> response = Unirest.post(\"{{baseUrl}}/process\")\n  .header(\"Content-Type\", \"application/json\")\n  .header(\"Accept\", \"application/json\")\n  .header(\"Content-Length\", \"\")\n  .body(\"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\")\n  .asString();\n",
+            "label": "java(Unirest)"
+          },
+          {
+            "lang": "kotlin",
+            "source": "val client = OkHttpClient()\nval mediaType = \"application/json\".toMediaType()\nval body = \"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\".toRequestBody(mediaType)\nval request = Request.Builder()\n  .url(\"{{baseUrl}}/process\")\n  .post(body)\n  .addHeader(\"Content-Type\", \"application/json\")\n  .addHeader(\"Accept\", \"application/json\")\n  .addHeader(\"Content-Length\", \"\")\n  .build()\nval response = client.newCall(request).execute()",
+            "label": "kotlin(Okhttp)"
+          },
+          {
+            "lang": "nodejs",
+            "source": "const axios = require('axios');\nlet data = JSON.stringify({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\n\nlet config = {\n  method: 'post',\n  maxBodyLength: Infinity,\n  url: '{{baseUrl}}/process',\n  headers: { \n    'Content-Type': 'application/json', \n    'Accept': 'application/json', \n    'Content-Length': ''\n  },\n  data : data\n};\n\naxios.request(config)\n.then((response) => {\n  console.log(JSON.stringify(response.data));\n})\n.catch((error) => {\n  console.log(error);\n});\n",
+            "label": "nodejs(Axios)"
+          },
+          {
+            "lang": "nodejs",
+            "source": "var https = require('follow-redirects').https;\nvar fs = require('fs');\n\nvar options = {\n  'method': 'POST',\n  'hostname': '{{baseUrl}}',\n  'path': '/process',\n  'headers': {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Content-Length': ''\n  },\n  'maxRedirects': 20\n};\n\nvar req = https.request(options, function (res) {\n  var chunks = [];\n\n  res.on(\"data\", function (chunk) {\n    chunks.push(chunk);\n  });\n\n  res.on(\"end\", function (chunk) {\n    var body = Buffer.concat(chunks);\n    console.log(body.toString());\n  });\n\n  res.on(\"error\", function (error) {\n    console.error(error);\n  });\n});\n\nvar postData = JSON.stringify({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n});\n\nreq.write(postData);\n\nreq.end();",
+            "label": "nodejs(Native)"
+          },
+          {
+            "lang": "nodejs",
+            "source": "var request = require('request');\nvar options = {\n  'method': 'POST',\n  'url': '{{baseUrl}}/process',\n  'headers': {\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Content-Length': ''\n  },\n  body: JSON.stringify({\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\"\n  })\n\n};\nrequest(options, function (error, response) {\n  if (error) throw new Error(error);\n  console.log(response.body);\n});\n",
+            "label": "nodejs(Request)"
+          },
+          {
+            "lang": "nodejs",
+            "source": "var unirest = require('unirest');\nvar req = unirest('POST', '{{baseUrl}}/process')\n  .headers({\n    'Content-Type': 'application/json',\n    'Accept': 'application/json',\n    'Content-Length': ''\n  })\n  .send(JSON.stringify({\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\"\n  }))\n  .end(function (res) { \n    if (res.error) throw new Error(res.error); \n    console.log(res.raw_body);\n  });\n",
+            "label": "nodejs(Unirest)"
+          },
+          {
+            "lang": "objective-c",
+            "source": "#import <Foundation/Foundation.h>\n\ndispatch_semaphore_t sema = dispatch_semaphore_create(0);\n\nNSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:[NSURL URLWithString:@\"%7B%7BbaseUrl%7D%7D/process\"]\n  cachePolicy:NSURLRequestUseProtocolCachePolicy\n  timeoutInterval:10.0];\nNSDictionary *headers = @{\n  @\"Content-Type\": @\"application/json\",\n  @\"Accept\": @\"application/json\",\n  @\"Content-Length\": @\"\"\n};\n\n[request setAllHTTPHeaderFields:headers];\nNSData *postData = [[NSData alloc] initWithData:[@\"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\" dataUsingEncoding:NSUTF8StringEncoding]];\n[request setHTTPBody:postData];\n\n[request setHTTPMethod:@\"POST\"];\n\nNSURLSession *session = [NSURLSession sharedSession];\nNSURLSessionDataTask *dataTask = [session dataTaskWithRequest:request\ncompletionHandler:^(NSData *data, NSURLResponse *response, NSError *error) {\n  if (error) {\n    NSLog(@\"%@\", error);\n    dispatch_semaphore_signal(sema);\n  } else {\n    NSHTTPURLResponse *httpResponse = (NSHTTPURLResponse *) response;\n    NSError *parseError = nil;\n    NSDictionary *responseDictionary = [NSJSONSerialization JSONObjectWithData:data options:0 error:&parseError];\n    NSLog(@\"%@\",responseDictionary);\n    dispatch_semaphore_signal(sema);\n  }\n}];\n[dataTask resume];\ndispatch_semaphore_wait(sema, DISPATCH_TIME_FOREVER);",
+            "label": "objective-c(NSURLSession)"
+          },
+          {
+            "lang": "ocaml",
+            "source": "open Lwt\nopen Cohttp\nopen Cohttp_lwt_unix\n\nlet postData = ref \"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\";;\n\nlet reqBody = \n  let uri = Uri.of_string \"{{baseUrl}}/process\" in\n  let headers = Header.init ()\n    |> fun h -> Header.add h \"Content-Type\" \"application/json\"\n    |> fun h -> Header.add h \"Accept\" \"application/json\"\n    |> fun h -> Header.add h \"Content-Length\" \"\"\n  in\n  let body = Cohttp_lwt.Body.of_string !postData in\n\n  Client.call ~headers ~body `POST uri >>= fun (_resp, body) ->\n  body |> Cohttp_lwt.Body.to_string >|= fun body -> body\n\nlet () =\n  let respBody = Lwt_main.run reqBody in\n  print_endline (respBody)",
+            "label": "ocaml(Cohttp)"
+          },
+          {
+            "lang": "php",
+            "source": "<?php\n$client = new Client();\n$headers = [\n  'Content-Type' => 'application/json',\n  'Accept' => 'application/json',\n  'Content-Length' => '69'\n];\n$body = '{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}';\n$request = new Request('POST', '{{baseUrl}}/process', $headers, $body);\n$res = $client->sendAsync($request)->wait();\necho $res->getBody();\n",
+            "label": "php(Guzzle)"
+          },
+          {
+            "lang": "php",
+            "source": "<?php\nrequire_once 'HTTP/Request2.php';\n$request = new HTTP_Request2();\n$request->setUrl('{{baseUrl}}/process');\n$request->setMethod(HTTP_Request2::METHOD_POST);\n$request->setConfig(array(\n  'follow_redirects' => TRUE\n));\n$request->setHeader(array(\n  'Content-Type' => 'application/json',\n  'Accept' => 'application/json',\n  'Content-Length' => ''\n));\n$request->setBody('{\\n  \"id\": \"<string>\",\\n  \"name\": \"<string>\",\\n  \"version\": \"<string>\"\\n}');\ntry {\n  $response = $request->send();\n  if ($response->getStatus() == 200) {\n    echo $response->getBody();\n  }\n  else {\n    echo 'Unexpected HTTP status: ' . $response->getStatus() . ' ' .\n    $response->getReasonPhrase();\n  }\n}\ncatch(HTTP_Request2_Exception $e) {\n  echo 'Error: ' . $e->getMessage();\n}",
+            "label": "php(HTTP_Request2)"
+          },
+          {
+            "lang": "php",
+            "source": "<?php\n\n$curl = curl_init();\n\ncurl_setopt_array($curl, array(\n  CURLOPT_URL => '{{baseUrl}}/process',\n  CURLOPT_RETURNTRANSFER => true,\n  CURLOPT_ENCODING => '',\n  CURLOPT_MAXREDIRS => 10,\n  CURLOPT_TIMEOUT => 0,\n  CURLOPT_FOLLOWLOCATION => true,\n  CURLOPT_HTTP_VERSION => CURL_HTTP_VERSION_1_1,\n  CURLOPT_CUSTOMREQUEST => 'POST',\n  CURLOPT_POSTFIELDS =>'{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}',\n  CURLOPT_HTTPHEADER => array(\n    'Content-Type: application/json',\n    'Accept: application/json',\n    'Content-Length: '\n  ),\n));\n\n$response = curl_exec($curl);\n\ncurl_close($curl);\necho $response;\n",
+            "label": "php(cURL)"
+          },
+          {
+            "lang": "php",
+            "source": "<?php\n$client = new http\\Client;\n$request = new http\\Client\\Request;\n$request->setRequestUrl('{{baseUrl}}/process');\n$request->setRequestMethod('POST');\n$body = new http\\Message\\Body;\n$body->append('{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}');\n$request->setBody($body);\n$request->setOptions(array());\n$request->setHeaders(array(\n  'Content-Type' => 'application/json',\n  'Accept' => 'application/json',\n  'Content-Length' => ''\n));\n$client->enqueue($request)->send();\n$response = $client->getResponse();\necho $response->getBody();\n",
+            "label": "php(pecl_http)"
+          },
+          {
+            "lang": "powershell",
+            "source": "$headers = New-Object \"System.Collections.Generic.Dictionary[[String],[String]]\"\n$headers.Add(\"Content-Type\", \"application/json\")\n$headers.Add(\"Accept\", \"application/json\")\n$headers.Add(\"Content-Length\", \"\")\n\n$body = @\"\n{\n  `\"id`\": `\"<string>`\",\n  `\"name`\": `\"<string>`\",\n  `\"version`\": `\"<string>`\"\n}\n\"@\n\n$response = Invoke-RestMethod '{{baseUrl}}/process' -Method 'POST' -Headers $headers -Body $body\n$response | ConvertTo-Json",
+            "label": "powershell(RestMethod)"
+          },
+          {
+            "lang": "python",
+            "source": "import requests\nimport json\n\nurl = \"{{baseUrl}}/process\"\n\npayload = json.dumps({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n})\nheaders = {\n  'Content-Type': 'application/json',\n  'Accept': 'application/json',\n  'Content-Length': ''\n}\n\nresponse = requests.request(\"POST\", url, headers=headers, data=payload)\n\nprint(response.text)\n",
+            "label": "python(Requests)"
+          },
+          {
+            "lang": "python",
+            "source": "import http.client\nimport json\n\nconn = http.client.HTTPSConnection(\"{{baseUrl}}\")\npayload = json.dumps({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n})\nheaders = {\n  'Content-Type': 'application/json',\n  'Accept': 'application/json',\n  'Content-Length': ''\n}\nconn.request(\"POST\", \"/process\", payload, headers)\nres = conn.getresponse()\ndata = res.read()\nprint(data.decode(\"utf-8\"))",
+            "label": "python(http.client)"
+          },
+          {
+            "lang": "ruby",
+            "source": "require \"uri\"\nrequire \"json\"\nrequire \"net/http\"\n\nurl = URI(\"{{baseUrl}}/process\")\n\nhttp = Net::HTTP.new(url.host, url.port);\nrequest = Net::HTTP::Post.new(url)\nrequest[\"Content-Type\"] = \"application/json\"\nrequest[\"Accept\"] = \"application/json\"\nrequest[\"Content-Length\"] = \"\"\nrequest.body = JSON.dump({\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n})\n\nresponse = http.request(request)\nputs response.read_body\n",
+            "label": "ruby(Net::HTTP)"
+          },
+          {
+            "lang": "rust",
+            "source": "#[tokio::main]\nasync fn main() -> Result<(), Box<dyn std::error::Error>> {\n    let client = reqwest::Client::builder()\n        .build()?;\n\n    let mut headers = reqwest::header::HeaderMap::new();\n    headers.insert(\"Content-Type\", \"application/json\".parse()?);\n    headers.insert(\"Accept\", \"application/json\".parse()?);\n    headers.insert(\"Content-Length\", \"\".parse()?);\n\n    let data = r#\"{\n    \"id\": \"<string>\",\n    \"name\": \"<string>\",\n    \"version\": \"<string>\"\n}\"#;\n\n    let json: serde_json::Value = serde_json::from_str(&data)?;\n\n    let request = client.request(reqwest::Method::POST, \"{{baseUrl}}/process\")\n        .headers(headers)\n        .json(&json);\n\n    let response = request.send().await?;\n    let body = response.text().await?;\n\n    println!(\"{}\", body);\n\n    Ok(())\n}",
+            "label": "rust(reqwest)"
+          },
+          {
+            "lang": "r",
+            "source": "library(RCurl)\nheaders = c(\n  \"Content-Type\" = \"application/json\",\n  \"Accept\" = \"application/json\",\n  \"Content-Length\" = \"69\"\n)\nparams = \"{\n  \\\"id\\\": \\\"<string>\\\",\n  \\\"name\\\": \\\"<string>\\\",\n  \\\"version\\\": \\\"<string>\\\"\n}\"\nres <- postForm(\"{{baseUrl}}/process\", .opts=list(postfields = params, httpheader = headers, followlocation = TRUE), style = \"httppost\")\ncat(res)",
+            "label": "r(RCurl)"
+          },
+          {
+            "lang": "r",
+            "source": "library(httr)\n\nheaders = c(\n  'Content-Type' = 'application/json',\n  'Accept' = 'application/json',\n  'Content-Length' = '69'\n)\n\nbody = '{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}';\n\nres <- VERB(\"POST\", url = \"{{baseUrl}}/process\", body = body, add_headers(headers))\n\ncat(content(res, 'text'))",
+            "label": "r(httr)"
+          },
+          {
+            "lang": "shell",
+            "source": "printf '{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}'| http  --follow --timeout 3600 POST '{{baseUrl}}/process' \\\n Content-Type:'application/json' \\\n Accept:'application/json' \\\n Content-Length:",
+            "label": "shell(Httpie)"
+          },
+          {
+            "lang": "shell",
+            "source": "wget --no-check-certificate --quiet \\\n  --method POST \\\n  --timeout=0 \\\n  --header 'Content-Type: application/json' \\\n  --header 'Accept: application/json' \\\n  --header 'Content-Length: ' \\\n  --body-data '{\n  \"id\": \"<string>\",\n  \"name\": \"<string>\",\n  \"version\": \"<string>\"\n}' \\\n   '{{baseUrl}}/process'",
+            "label": "shell(wget)"
+          },
+          {
+            "lang": "swift",
+            "source": "let parameters = \"{\\n  \\\"id\\\": \\\"<string>\\\",\\n  \\\"name\\\": \\\"<string>\\\",\\n  \\\"version\\\": \\\"<string>\\\"\\n}\"\nlet postData = parameters.data(using: .utf8)\n\nvar request = URLRequest(url: URL(string: \"{{baseUrl}}/process\")!,timeoutInterval: Double.infinity)\nrequest.addValue(\"application/json\", forHTTPHeaderField: \"Content-Type\")\nrequest.addValue(\"application/json\", forHTTPHeaderField: \"Accept\")\nrequest.addValue(\"\", forHTTPHeaderField: \"Content-Length\")\n\nrequest.httpMethod = \"POST\"\nrequest.httpBody = postData\n\nlet task = URLSession.shared.dataTask(with: request) { data, response, error in \n  guard let data = data else {\n    print(String(describing: error))\n    return\n  }\n  print(String(data: data, encoding: .utf8)!)\n}\n\ntask.resume()\n",
+            "label": "swift(URLSession)"
+          }
+        ]
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Crime",
+          "Drama",
+          "Fantasy",
+          "Historical",
+          "Historical Fiction",
+          "Horror",
+          "Magical Realism",
+          "Mystery",
+          "Philosophical",
+          "Political",
+          "Romance",
+          "Saga",
+          "Satire",
+          "Scifi",
+          "Social",
+          "Speculative",
+          "Thriller",
+          "Urban",
+          "Animation"
+        ],
+        "title": "Genre"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "RequestModel": {
+        "properties": {
+          "id": {
+            "type": "string",
+            "title": "Id"
+          },
+          "name": {
+            "type": "string",
+            "title": "Name"
+          },
+          "version": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "title": "Version"
+          }
+        },
+        "type": "object",
+        "required": [
+          "id",
+          "name"
+        ],
+        "title": "RequestModel"
+      },
+      "ResponseModel": {
+        "properties": {
+          "success": {
+            "type": "boolean",
+            "title": "Success"
+          },
+          "message": {
+            "type": "string",
+            "title": "Message"
+          },
+          "processed_name": {
+            "type": "string",
+            "title": "Processed Name"
+          }
+        },
+        "type": "object",
+        "required": [
+          "success",
+          "message",
+          "processed_name"
+        ],
+        "title": "ResponseModel"
+      },
+      "SlotType": {
+        "type": "string",
+        "enum": [
+          "Movie",
+          "Documentary",
+          "Concert"
+        ],
+        "title": "SlotType"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
