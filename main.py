@@ -1,4 +1,7 @@
+import json
 from typing import Optional
+
+from fastapi.responses import JSONResponse
 from objects.models import *
 from controllers.ticketController import *
 from fastapi import FastAPI
@@ -107,3 +110,43 @@ def getAllMovieSlotsAfterTime(inputTime: datetime):
 def getAllMovieSlotsBeforeTime(inputTime: datetime):
     return ticketAdmin.getAllMovieSlotsAfterTime(inputTime)
 """
+
+class RequestModel(BaseModel):
+    id: str
+    name: str
+    version: Optional[str] = None  # Optional field with default value
+
+
+# Define Response Model
+class ResponseModel(BaseModel):
+    success: bool
+    message: str
+    processed_name: str
+
+
+# Create a POST endpoint to take request object and return response object
+@app.post("/process", response_model=ResponseModel)
+async def process_data(request: RequestModel):
+    # Process the input data (this is where your logic goes)
+    processed_name = request.name.upper()  # Example processing: make the name uppercase
+
+    # Return the response object
+    return ResponseModel(
+        success=True,
+        message="Data processed successfully",
+        processed_name=processed_name
+    )
+
+
+
+# Path to your OpenAPI spec JSON file
+OPENAPI_SPEC_PATH = "docs/openapi_penify.json"
+
+@app.on_event("startup")
+async def load_custom_openapi():
+    if os.path.exists(OPENAPI_SPEC_PATH):
+        with open(OPENAPI_SPEC_PATH, "r") as f:
+            custom_openapi = json.load(f)
+        app.openapi_schema = custom_openapi  # Override FastAPI's default OpenAPI schema
+    else:
+        print("Custom OpenAPI spec file not found. Using default schema.")
