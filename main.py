@@ -150,3 +150,5 @@ async def load_custom_openapi():
         app.openapi_schema = custom_openapi  # Override FastAPI's default OpenAPI schema
     else:
         print("Custom OpenAPI spec file not found. Using default schema.")
+
+
