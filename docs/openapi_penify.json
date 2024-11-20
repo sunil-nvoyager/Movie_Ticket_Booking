@@ -1,0 +1,534 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Ticketly",
+    "description": "A Movie Theatre Ticket booking System  ",
+    "version": "0.1.0"
+  },
+  "paths": {
+    "/bookTicket": {
+      "post": {
+        "tags": [
+          "TicketBooking"
+        ],
+        "summary": "Book Tickets",
+        "description": "Book tickets for a movie using user details including `userName`, `userPhoneNumber`, `movieName`, `movieStartTime`, and `numTickets`.",
+        "operationId": "bookTicket_bookTicket_post",
+        "parameters": [
+          {
+            "name": "userName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Username"
+            }
+          },
+          {
+            "name": "userPhoneNumber",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Userphonenumber"
+            }
+          },
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          },
+          {
+            "name": "numTickets",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "title": "Numtickets"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/updateMovieSlotForTicket": {
+      "post": {
+        "tags": [
+          "Update Ticket Timing"
+        ],
+        "summary": "Update a Ticket Time",
+        "description": "Updates the timing of a movie ticket using `ticketId`, `newMovie`, and `newStartTime` parameters.",
+        "operationId": "updateMovieSlotForTicket_updateMovieSlotForTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          },
+          {
+            "name": "newMovie",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Newmovie"
+            }
+          },
+          {
+            "name": "newStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Newstarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllTicketsForMovieSlot": {
+      "post": {
+        "tags": [
+          "Ticket Details"
+        ],
+        "summary": "Get all Booked Tickets for a Movie Slot",
+        "description": "Retrieves all booked tickets for a specified movie slot based on the provided `movieName` and `movieStartTime`.",
+        "operationId": "getAllTicketsForMovieSlot_getAllTicketsForMovieSlot_post",
+        "parameters": [
+          {
+            "name": "movieName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Moviename"
+            }
+          },
+          {
+            "name": "movieStartTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Moviestarttime"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getUserDetailsByTicketId": {
+      "post": {
+        "tags": [
+          "User Details"
+        ],
+        "summary": "User Details",
+        "description": "Retrieves user details based on the provided `ticketId`. This endpoint requires a valid `ticketId` as a query parameter.",
+        "operationId": "getUserDetailsByTicketId_getUserDetailsByTicketId_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/cancelTicket": {
+      "post": {
+        "tags": [
+          " Cancel Tickets"
+        ],
+        "summary": "Cancel Tickets",
+        "description": "Cancels a ticket identified by `ticketId`. Requires a valid `ticketId` as a query parameter.",
+        "operationId": "cancelTicket_cancelTicket_post",
+        "parameters": [
+          {
+            "name": "ticketId",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Ticketid"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/expireTickets": {
+      "post": {
+        "tags": [
+          "Automated Ticket Expiry"
+        ],
+        "summary": "Make Tickets Expire",
+        "description": "Marks a ticket as expired if the difference between the ticket time and the current time is 8 hours.",
+        "operationId": "expiretickets_expireTickets_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/scheduleMovie": {
+      "post": {
+        "tags": [
+          "Movie Scheduler"
+        ],
+        "summary": "Movie Scheduler",
+        "description": "Schedules a movie by adding it to the specified time slot.",
+        "operationId": "scheduleMovie_scheduleMovie_post",
+        "parameters": [
+          {
+            "name": "slotName",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotname"
+            }
+          },
+          {
+            "name": "slotDescription",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "title": "Slotdescription"
+            }
+          },
+          {
+            "name": "startTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Starttime"
+            }
+          },
+          {
+            "name": "endTime",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string",
+              "format": "date-time",
+              "title": "Endtime"
+            }
+          },
+          {
+            "name": "slotType",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/SlotType"
+            }
+          },
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlots": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots",
+        "description": "Retrieves details of all movie slots available.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlots_post",
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          }
+        }
+      }
+    },
+    "/getAllMovieSlotsByGenre": {
+      "post": {
+        "tags": [
+          "Movie Slot Details"
+        ],
+        "summary": "Movie Slots Genre",
+        "description": "Retrieves details of all movie slots filtered by genre. Requires a `genre` query parameter.",
+        "operationId": "getAllMovieSlotsByGenre_getAllMovieSlotsByGenre_post",
+        "parameters": [
+          {
+            "name": "genre",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "$ref": "#/components/schemas/Genre"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful Response",
+            "content": {
+              "application/json": {
+                "schema": {}
+              }
+            }
+          },
+          "422": {
+            "description": "Validation Error",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HTTPValidationError"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Genre": {
+        "type": "string",
+        "enum": [
+          "Action",
+          "Adventure",
+          "Comedy",
+          "Crime",
+          "Drama",
+          "Fantasy",
+          "Historical",
+          "Historical Fiction",
+          "Horror",
+          "Magical Realism",
+          "Mystery",
+          "Philosophical",
+          "Political",
+          "Romance",
+          "Saga",
+          "Satire",
+          "Scifi",
+          "Social",
+          "Speculative",
+          "Thriller",
+          "Urban",
+          "Animation"
+        ],
+        "title": "Genre"
+      },
+      "HTTPValidationError": {
+        "properties": {
+          "detail": {
+            "items": {
+              "$ref": "#/components/schemas/ValidationError"
+            },
+            "type": "array",
+            "title": "Detail"
+          }
+        },
+        "type": "object",
+        "title": "HTTPValidationError"
+      },
+      "SlotType": {
+        "type": "string",
+        "enum": [
+          "Movie",
+          "Documentary",
+          "Concert"
+        ],
+        "title": "SlotType"
+      },
+      "ValidationError": {
+        "properties": {
+          "loc": {
+            "items": {
+              "anyOf": [
+                {
+                  "type": "string"
+                },
+                {
+                  "type": "integer"
+                }
+              ]
+            },
+            "type": "array",
+            "title": "Location"
+          },
+          "msg": {
+            "type": "string",
+            "title": "Message"
+          },
+          "type": {
+            "type": "string",
+            "title": "Error Type"
+          }
+        },
+        "type": "object",
+        "required": [
+          "loc",
+          "msg",
+          "type"
+        ],
+        "title": "ValidationError"
+      }
+    }
+  }
+}
