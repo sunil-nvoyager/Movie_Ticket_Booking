@@ -127,6 +127,20 @@ class ResponseModel(BaseModel):
 # Create a POST endpoint to take request object and return response object
 @app.post("/process", response_model=ResponseModel)
 async def process_data(request: RequestModel):
+    """Process the input data from a request model.
+
+    This function takes a request model as input, processes the data by
+    converting the name to uppercase, and returns a response model
+    indicating the success of the operation along with the processed name.
+
+    Args:
+        request (RequestModel): The input request model containing the data to be processed.
+
+    Returns:
+        ResponseModel: A response model indicating the success of the processing and the
+            processed name.
+    """
+
     # Process the input data (this is where your logic goes)
     processed_name = request.name.upper()  # Example processing: make the name uppercase
 
@@ -144,6 +158,15 @@ OPENAPI_SPEC_PATH = "docs/openapi_penify.json"
 
 @app.on_event("startup")
 async def load_custom_openapi():
+    """Load a custom OpenAPI specification if it exists.
+
+    This function checks for the existence of a custom OpenAPI specification
+    file at the specified path. If the file is found, it loads the JSON
+    content and overrides the default OpenAPI schema used by FastAPI. If the
+    file is not found, it prints a message indicating that the default
+    schema will be used.
+    """
+
     if os.path.exists(OPENAPI_SPEC_PATH):
         with open(OPENAPI_SPEC_PATH, "r") as f:
             custom_openapi = json.load(f)
